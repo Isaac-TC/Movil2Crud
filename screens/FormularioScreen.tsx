@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
  //FIREBASE
  import { getDatabase, ref, set } from "firebase/database";
@@ -21,7 +21,20 @@ export default function FormularioScreen() {
           age: edad,
           email: correo
         });
+        limpiar()
       }
+
+      function limpiar(){
+        setnombre('')
+        setedad(0)
+      }
+
+      useEffect(() => {
+       if( Number.isNaN(edad)){
+            setedad(0)
+       }
+      }, [edad])
+      
 
     return (
         <View>
@@ -35,6 +48,8 @@ export default function FormularioScreen() {
                 placeholder='Ingrese Nombre'
                 style={styles.input}
                 onChangeText={(texto) => setnombre(texto)}
+                    value={nombre}
+                
             />
 
 
@@ -42,6 +57,7 @@ export default function FormularioScreen() {
                 placeholder='Ingrese Edad'
                 style={styles.input}
                 onChangeText={(texto) => setedad(+texto)}
+                value={edad.toString()}
             />
 
 
